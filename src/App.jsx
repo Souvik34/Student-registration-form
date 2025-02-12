@@ -84,7 +84,13 @@ function App() {
           >
             {(formik) => (
               <Form className='shadow-lg glass-form'>
-                <h1 className='mb-4' style={{ color: '#1BAAEA', fontWeight:600}}>Register here</h1>
+                <h1 className='mb-4' style={{ color: '#1BAAEA', fontWeight: 600 }}>Register here
+                  <img
+                    src="/src/assets/registration.png"
+                    alt="icon"
+                    style={{ marginLeft: '30px', width: '40px', height: '40px' }}
+                  />
+                </h1>
 
 
                 {/* Name Field */}
@@ -93,7 +99,7 @@ function App() {
                   <Field
                     name='name'
                     type='text'
-                    placeholder='Enter your name' 
+                    placeholder='Enter your name'
                     style={{ backgroundColor: '#29313F', color: '#ffffff' }}
                     className={formik.touched.name && formik.errors.name ? 'form-control is-invalid' : 'form-control'}
                   />
