@@ -44,6 +44,24 @@ function App () {
         errors.phoneNo = 'Invalid Contact Number';
       }
 
+      if(!values.password)
+      {
+        errors.password = 'Password is required';
+      }
+      if(!validator.isStrongPassword(values.password))
+      {
+        errors.password = 'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character';
+      }
+
+if(!values.ConfirmPassword)
+{
+  errors.ConfirmPassword = 'Confirm Password is required';
+}
+else if(values.password !== values.ConfirmPassword)
+{
+  errors.ConfirmPassword = 'Password and Confirm Password must match';
+}
+
       return errors;
   }
   return (
@@ -51,9 +69,10 @@ function App () {
       <div className='row wrapper'>
         <div className="col-10 col-lg-5">
 
-          <Formik className='shadow-lg' initialValues={{name: '', email: '', phoneNo:'', password: '', confirmPassword: ''}}
+          <Formik className='shadow-lg' initialValues={{name: '', email: '', phoneNo:'', password: ''}}
           
           validate={validateForm}
+          onSubmit={(values) => { console.log(values)}}
           >
             {(formik) =>  (
 
@@ -103,6 +122,40 @@ function App () {
                   {formik.touched.phoneNo && formik.errors.phoneNo ? (
                     <div className='invalid-feedback'>{formik.errors.phoneNo}</div>
                   ) : null}
+                </div>
+
+
+                {/* For Password */}
+                <div className="form-group mt-4">
+                  <label htmlFor="password">Password</label>
+                  <Field 
+                  name='password'
+                  type='password'
+                  className={formik.touched.password && formik.errors.password ? 'form-control is-invalid' : 'form-control'}
+                  />
+
+                  {formik.touched.password && formik.errors.password ? (
+                    <div className='invalid-feedback'>{formik.errors.password}</div>
+                  ) : null}
+                </div>
+
+
+                {/* For  Confirm Password */}
+                <div className="form-group mt-4">
+                  <label htmlFor="ConfirmPassword">Confirm Password</label>
+                  <Field 
+                  name='ConfirmPassword'
+                  type='password'
+                  className={formik.touched.ConfirmPassword && formik.errors.ConfirmPassword ? 'form-control is-invalid' : 'form-control'}
+                  />
+
+                  {formik.touched.ConfirmPassword && formik.errors.ConfirmPassword ? (
+                    <div className='invalid-feedback'>{formik.errors.ConfirmPassword}</div>
+                  ) : null}
+                </div>
+
+                <div className="form-group">
+                  <button type='submit' className='btn btn-primary py-3 mt-4 w-100'>Submit</button>
                 </div>
               </Form>
               
