@@ -69,48 +69,32 @@ function App() {
     <div className="container container-fluid">
       <div className='row wrapper'>
         <div className="col-10 col-lg-5">
-        <Formik
-  initialValues={{
-    name: '',
-    age: '',
-    email: '',
-    course: '',
-    password: '',
-    ConfirmPassword: '',
-    agreeToRules: false,
-  }}
-  validate={validateForm}
-  onSubmit={(values, { resetForm, setTouched, setSubmitting }) => {
-    const errors = validateForm(values);
-    if (Object.keys(errors).length > 0) {
-      setTouched({
-        name: true,
-        age: true,
-        email: true,
-        course: true,  // Manually set course as touched
-        password: true,
-        ConfirmPassword: true,
-        agreeToRules: true,
-      });
-      setSubmitting(false);
-      return;
-    }
-
-    handleSubmit(values, { resetForm });
-  }}
->
-
+          <Formik
+            initialValues={{
+              name: '',
+              age: '',
+              email: '',
+              course: '',
+              password: '',
+              ConfirmPassword: '',
+              agreeToRules: false,
+            }}
+            validate={validateForm}
+            onSubmit={handleSubmit}
+          >
             {(formik) => (
-              <Form className='shadow-lg'>
-                <h1 className='mb-4'>Register here</h1>
+              <Form className='shadow-lg glass-form'>
+                <h1 className='mb-4' style={{ color: '#1BAAEA', fontWeight:600}}>Register here</h1>
+
 
                 {/* Name Field */}
                 <div className="form-group mt-4">
-                  <label htmlFor="name">Name</label>
+                  <label htmlFor="name" style={{ color: '#ffffff' }}>Name</label>
                   <Field
                     name='name'
                     type='text'
-                    placeholder='Enter your name'
+                    placeholder='Enter your name' 
+                    style={{ backgroundColor: '#29313F', color: '#ffffff' }}
                     className={formik.touched.name && formik.errors.name ? 'form-control is-invalid' : 'form-control'}
                   />
                   {formik.touched.name && formik.errors.name && (
@@ -125,6 +109,7 @@ function App() {
                     name='age'
                     type='number'
                     placeholder='Enter your age'
+                    style={{ backgroundColor: '#29313F', color: '#ffffff' }}
                     className={formik.touched.age && formik.errors.age ? 'form-control is-invalid' : 'form-control'}
                   />
                   {formik.touched.age && formik.errors.age && (
@@ -139,6 +124,7 @@ function App() {
                     name='email'
                     type='email'
                     placeholder='Enter your email'
+                    style={{ backgroundColor: '#29313F', color: '#ffffff' }}
                     className={formik.touched.email && formik.errors.email ? 'form-control is-invalid' : 'form-control'}
                   />
                   {formik.touched.email && formik.errors.email && (
@@ -155,6 +141,7 @@ function App() {
                       name="course"
                       onBlur={formik.handleBlur}
                       className={formik.touched.course && formik.errors.course ? 'form-control is-invalid custom-select' : 'form-control custom-select'}
+                      style={{ backgroundColor: '#29313F', color: '#ffffff' }}
                     >
 
                       <option value="" label="Please select your course" />
@@ -179,6 +166,7 @@ function App() {
                     name='password'
                     type='password'
                     placeholder='Enter your password'
+                    style={{ backgroundColor: '#29313F', color: '#ffffff' }}
                     className={formik.touched.password && formik.errors.password ? 'form-control is-invalid' : 'form-control'}
                   />
                   {formik.touched.password && formik.errors.password && (
@@ -193,6 +181,7 @@ function App() {
                     name='ConfirmPassword'
                     type='password'
                     placeholder='Confirm your password'
+                    style={{ backgroundColor: '#29313F', color: '#ffffff' }}
                     className={formik.touched.ConfirmPassword && formik.errors.ConfirmPassword ? 'form-control is-invalid' : 'form-control'}
                   />
                   {formik.touched.ConfirmPassword && formik.errors.ConfirmPassword && (
