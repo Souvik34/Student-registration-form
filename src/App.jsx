@@ -88,7 +88,7 @@ function App() {
                   <img
                     src="/src/assets/registration.png"
                     alt="icon"
-                    style={{ marginLeft: '30px', width: '40px', height: '40px' }}
+                    style={{ marginLeft: '2rem', width: '40px', height: '40px' }}
                   />
                 </h1>
 
