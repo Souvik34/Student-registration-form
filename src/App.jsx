@@ -87,7 +87,6 @@ function App() {
                 <h1 className='mb-4' style={{ color: '#1BAAEA', fontWeight: 600 }}>Register here
                   <img
                     src="/src/assets/registration.png"
-                    alt="icon"
                     style={{ marginLeft: '2rem', width: '40px', height: '40px' }}
                   />
                 </h1>
