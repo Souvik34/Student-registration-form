@@ -1,171 +1,238 @@
-/* eslint-disable no-unused-vars */
-// eslint-disable-next-line no-unused-vars
-import React from 'react'
-import{Form, Formik, Field} from 'formik'
-import validator from 'validator'
-function App () {
+import React, { useState } from 'react';
+import { Form, Formik, Field } from 'formik';
+import validator from 'validator';
+
+function App() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validateForm = (values) => {
-
-    const errors ={};
-
-    if(!values.name)
-
-      {
-        errors.name = 'Name is required';
-      }
-
-      else if(values.name.length < 3)
-      {
-        errors.name = 'Name must be at least 3 characters';
-      }
-      else if(values.name.length > 15)
-      {
-        errors.name = 'Name must be less than 15 characters';
-      }
+    const errors = {};
 
 
-      if(!values.email)
-      {
-        errors.email = 'Email is required';
-      }
-      
-      else if(!validator.isEmail(values.email))
-      {
-        errors.email = 'Invalid email format';
-      }
 
-      if(!values.phoneNo)
-      {
-        errors.phoneNo = 'Contact Number is required';
-      }
-      else if(!validator.isMobilePhone(values.phoneNo))
-      {
-        errors.phoneNo = 'Invalid Contact Number';
-      }
+    if (!values.name || values.name.trim() === '') {
+      errors.name = 'Name is required and cannot be empty spaces';
+    } else if (values.name.trim().length < 1) {
+      errors.name = 'Name must be at least 1 character';
+    } else if (values.name.trim().length > 15) {
+      errors.name = 'Name must be less than 15 characters';
+    }
 
-      if(!values.password)
-      {
-        errors.password = 'Password is required';
-      }
-      if(!validator.isStrongPassword(values.password))
-      {
-        errors.password = 'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character';
-      }
 
-if(!values.ConfirmPassword)
-{
-  errors.ConfirmPassword = 'Confirm Password is required';
-}
-else if(values.password !== values.ConfirmPassword)
-{
-  errors.ConfirmPassword = 'Password and Confirm Password must match';
-}
+    if (!values.age) {
+      errors.age = 'Age is required';
+    } else if (values.age < 0) {
+      errors.age = 'Age must be a positive number';
+    }
 
-      return errors;
-  }
+    if (!values.email) {
+      errors.email = 'Email is required';
+    } else if (!validator.isEmail(values.email)) {
+      errors.email = 'Invalid email format';
+    }
+
+    if (!values.course || values.course === '') {
+      errors.course = 'Course is required';
+    }
+
+
+    if (!values.password) {
+      errors.password = 'Password is required';
+    } else if (!validator.isStrongPassword(values.password)) {
+      errors.password = 'Password must contain at least 8 characters, 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character';
+    }
+
+    if (!values.ConfirmPassword) {
+      errors.ConfirmPassword = 'Confirm Password is required';
+    } else if (values.password !== values.ConfirmPassword) {
+      errors.ConfirmPassword = 'Password and Confirm Password must match';
+    }
+
+    if (!values.agreeToRules) {
+      errors.agreeToRules = 'You must agree to the rules before submitting';
+    }
+
+    return errors;
+  };
+
+  const handleSubmit = (values, { resetForm }) => {
+    console.log(values);
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      resetForm();
+      setIsSubmitting(false);
+    }, 2000);
+  };
+
   return (
     <div className="container container-fluid">
       <div className='row wrapper'>
         <div className="col-10 col-lg-5">
+        <Formik
+  initialValues={{
+    name: '',
+    age: '',
+    email: '',
+    course: '',
+    password: '',
+    ConfirmPassword: '',
+    agreeToRules: false,
+  }}
+  validate={validateForm}
+  onSubmit={(values, { resetForm, setTouched, setSubmitting }) => {
+    const errors = validateForm(values);
+    if (Object.keys(errors).length > 0) {
+      setTouched({
+        name: true,
+        age: true,
+        email: true,
+        course: true,  // Manually set course as touched
+        password: true,
+        ConfirmPassword: true,
+        agreeToRules: true,
+      });
+      setSubmitting(false);
+      return;
+    }
 
-          <Formik className='shadow-lg' initialValues={{name: '', email: '', phoneNo:'', password: ''}}
-          
-          validate={validateForm}
-          onSubmit={(values) => { console.log(values)}}
-          >
-            {(formik) =>  (
+    handleSubmit(values, { resetForm });
+  }}
+>
 
+            {(formik) => (
               <Form className='shadow-lg'>
                 <h1 className='mb-4'>Register here</h1>
 
-                {/* For Name */}
+                {/* Name Field */}
                 <div className="form-group mt-4">
                   <label htmlFor="name">Name</label>
-                  <Field 
-                  name='name'
-                  type='text'
-                  className={formik.touched.name && formik.errors.name ? 'form-control is-invalid' : 'form-control'}
+                  <Field
+                    name='name'
+                    type='text'
+                    placeholder='Enter your name'
+                    className={formik.touched.name && formik.errors.name ? 'form-control is-invalid' : 'form-control'}
                   />
-
-                  {formik.touched.name && formik.errors.name ? (
+                  {formik.touched.name && formik.errors.name && (
                     <div className='invalid-feedback'>{formik.errors.name}</div>
-                  ) : null}
+                  )}
                 </div>
 
+                {/* Age Field */}
+                <div className="form-group mt-4">
+                  <label htmlFor="age">Age</label>
+                  <Field
+                    name='age'
+                    type='number'
+                    placeholder='Enter your age'
+                    className={formik.touched.age && formik.errors.age ? 'form-control is-invalid' : 'form-control'}
+                  />
+                  {formik.touched.age && formik.errors.age && (
+                    <div className='invalid-feedback'>{formik.errors.age}</div>
+                  )}
+                </div>
 
-
-                {/* For Email */}
+                {/* Email Field */}
                 <div className="form-group mt-4">
                   <label htmlFor="email">Email</label>
-                  <Field 
-                  name='email'
-                  type='email'
-                  className={formik.touched.email && formik.errors.email ? 'form-control is-invalid' : 'form-control'}
+                  <Field
+                    name='email'
+                    type='email'
+                    placeholder='Enter your email'
+                    className={formik.touched.email && formik.errors.email ? 'form-control is-invalid' : 'form-control'}
                   />
-
-                  {formik.touched.email && formik.errors.email ? (
+                  {formik.touched.email && formik.errors.email && (
                     <div className='invalid-feedback'>{formik.errors.email}</div>
-                  ) : null}
+                  )}
                 </div>
 
+                {/* Course Dropdown */}
+                <div className="form-group mt-4 position-relative">
+                  <label htmlFor="course">Select your Course</label>
+                  <div className="custom-select-wrapper">
+                    <Field
+                      as="select"
+                      name="course"
+                      onBlur={formik.handleBlur}
+                      className={formik.touched.course && formik.errors.course ? 'form-control is-invalid custom-select' : 'form-control custom-select'}
+                    >
 
-                {/* For Phone Number */}
-                <div className="form-group mt-4">
-                  <label htmlFor="phoneNo">Contact Number</label>
-                  <Field 
-                  name='phoneNo'
-                  type='text'
-                  className={formik.touched.phoneNo && formik.errors.phoneNo ? 'form-control is-invalid' : 'form-control'}
-                  />
+                      <option value="" label="Please select your course" />
+                      <option value="btech" label="B.Tech" />
+                      <option value="mtech" label="M.Tech" />
+                      <option value="mba" label="MBA" />
+                      <option value="bsc" label="B.Sc" />
+                      <option value="msc" label="M.Sc" />
+                    </Field>
 
-                  {formik.touched.phoneNo && formik.errors.phoneNo ? (
-                    <div className='invalid-feedback'>{formik.errors.phoneNo}</div>
-                  ) : null}
+                    <span className="dropdown-arrow">&#9662;</span>
+                  </div>
+                  {formik.touched.course && formik.errors.course && (
+                    <div className='invalid-feedback'>{formik.errors.course}</div>
+                  )}
                 </div>
 
-
-                {/* For Password */}
+                {/* Password Field */}
                 <div className="form-group mt-4">
                   <label htmlFor="password">Password</label>
-                  <Field 
-                  name='password'
-                  type='password'
-                  className={formik.touched.password && formik.errors.password ? 'form-control is-invalid' : 'form-control'}
+                  <Field
+                    name='password'
+                    type='password'
+                    placeholder='Enter your password'
+                    className={formik.touched.password && formik.errors.password ? 'form-control is-invalid' : 'form-control'}
                   />
-
-                  {formik.touched.password && formik.errors.password ? (
+                  {formik.touched.password && formik.errors.password && (
                     <div className='invalid-feedback'>{formik.errors.password}</div>
-                  ) : null}
+                  )}
                 </div>
 
-
-                {/* For  Confirm Password */}
+                {/* Confirm Password Field */}
                 <div className="form-group mt-4">
                   <label htmlFor="ConfirmPassword">Confirm Password</label>
-                  <Field 
-                  name='ConfirmPassword'
-                  type='password'
-                  className={formik.touched.ConfirmPassword && formik.errors.ConfirmPassword ? 'form-control is-invalid' : 'form-control'}
+                  <Field
+                    name='ConfirmPassword'
+                    type='password'
+                    placeholder='Confirm your password'
+                    className={formik.touched.ConfirmPassword && formik.errors.ConfirmPassword ? 'form-control is-invalid' : 'form-control'}
                   />
-
-                  {formik.touched.ConfirmPassword && formik.errors.ConfirmPassword ? (
+                  {formik.touched.ConfirmPassword && formik.errors.ConfirmPassword && (
                     <div className='invalid-feedback'>{formik.errors.ConfirmPassword}</div>
-                  ) : null}
+                  )}
                 </div>
 
+                {/* Custom Checkbox for Rules */}
+                <div className="form-group form-check mt-4">
+                  <Field
+                    type="checkbox"
+                    name="agreeToRules"
+                    id="agreeToRules"
+                    className={`form-check-input ${formik.touched.agreeToRules && formik.errors.agreeToRules ? 'is-invalid' : ''}`}
+                  />
+                  <label htmlFor="agreeToRules" className="form-check-label">
+                    I accept the terms and services.
+                  </label>
+                  {formik.touched.agreeToRules && formik.errors.agreeToRules && (
+                    <div className='invalid-feedback d-block'>{formik.errors.agreeToRules}</div>
+                  )}
+                </div>
+
+                {/* Submit Button */}
                 <div className="form-group">
-                  <button type='submit' className='btn btn-primary py-3 mt-4 w-100'>Submit</button>
+                  <button
+                    type='submit'
+                    className='btn btn-primary py-3 mt-4 w-100'
+                    disabled={isSubmitting || !formik.isValid}
+                  >
+                    {isSubmitting ? 'Submitting...' : 'Submit'}
+                  </button>
                 </div>
               </Form>
-              
             )}
-
           </Formik>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
