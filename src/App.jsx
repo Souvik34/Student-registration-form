@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Form, Formik, Field } from 'formik';
 import validator from 'validator';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -60,13 +62,24 @@ function App() {
   const handleSubmit = (values, { resetForm }) => {
     console.log(values);
     setIsSubmitting(true);
-
+  
+    // Show toast notification
+    toast.success('Form submitted successfully!', {
+      position: "top-right",
+      autoClose: 3000, 
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  
     setTimeout(() => {
       resetForm();
       setIsSubmitting(false);
     }, 2000);
   };
-
+  
   return (
     <div className="container container-fluid">
       <div className='row wrapper'>
@@ -223,6 +236,8 @@ function App() {
           </Formik>
         </div>
       </div>
+      <ToastContainer />
+
     </div>
   );
 }
