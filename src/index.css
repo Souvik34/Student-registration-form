@@ -19,7 +19,7 @@ body {
 input::placeholder,
 textarea::placeholder,
 select::placeholder {
-  color: white !important; /* Ensure the placeholder text is white */
+  color: rgb(193, 183, 183) !important; /* Ensure the placeholder text is white */
 }
 
 .wrapper
