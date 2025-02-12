@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Form, Formik, Field } from 'formik';
 import validator from 'validator';
 
@@ -84,11 +86,7 @@ function App() {
           >
             {(formik) => (
               <Form className='shadow-lg glass-form'>
-                <h1 className='mb-4' style={{ color: '#1BAAEA', fontWeight: 600 }}>Register here
-                  <img
-                    src="/src/assets/registration.png"
-                    style={{ marginLeft: '2rem', width: '40px', height: '40px' }}
-                  />
+                <h1 className='mb-4' style={{ color: '#1BAAEA', fontWeight: 700 }}>Register here  <i className="fa-regular fa-address-card" style={{ color: '#ffffff' }}></i>
                 </h1>
 
 
