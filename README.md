@@ -43,7 +43,7 @@ npm start
 4. Open http://localhost:3000 in your browser.
 
 ## **Project Structure**
-
+```
 /src
   ├── components/
   ├── assets/ (Images, Icons)
@@ -51,7 +51,7 @@ npm start
   ├── index.js (Entry Point)
   ├── styles.js (Glassmorphism Styles)
 
-
+```
 
 
 ## **Contributing**
