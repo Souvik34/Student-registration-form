@@ -18,8 +18,8 @@ function App() {
       errors.name = 'Name is required and cannot be empty spaces';
     } else if (values.name.trim().length < 1) {
       errors.name = 'Name must be at least 1 character';
-    } else if (values.name.trim().length > 15) {
-      errors.name = 'Name must be less than 15 characters';
+    } else if (values.name.trim().length > 30) {
+      errors.name = 'Name must be less than 30 characters';
     }
 
 
